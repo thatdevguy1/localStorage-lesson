@@ -7,7 +7,62 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Hello WOrld</h1>
-    <p>new line</p>
+    <h1>Cities</h1>
+    <div class="citiesContainer">
+    </div>
+    <input class="cityInput" type="text" /> 
+    <button class="setCity">Set City</button>
+
+    <script>
+      var citiesEle = document.querySelector(".citiesContainer");
+      var setCity = document.querySelector(".setCity");
+      var cityInput = document.querySelector(".cityInput");
+      var cities;
+    
+    //First thing is to check if there are cities in localstorage to display to the user.
+    if(localStorage.getItem("cities")){
+      //Split the localstorage cities to convert from string to array
+      cities = localStorage.getItem("cities").split(",");
+      showCities();
+    };
+
+    //Listen to search button click to set new cities to our global cities variable
+    setCity.addEventListener("click", function(event){
+      event.preventDefault();
+      //Get the value of the input value and save it to city
+      var city = cityInput.value;
+      //Add that city to our cities array
+      cities.push(city);
+      //Empty the current cities container
+      citiesEle.innerHTML = "";
+      //Update the cities container with the new array of cities
+      showCities();
+      //Set the localstorage with the new array of cities
+      localStorage.setItem("cities", cities);
+    });
+
+    //function to show all the cities stores in our cities global variable
+    function showCities(){
+      //Looping through the cities (same as a for loop)
+      cities.forEach(function(e){
+        citiesEle.append(e + " ");
+      });
+    }
+
+
+    //OBJECT localstorage code
+    var person = {
+      name : "David",
+      age : 30,
+      height : 511
+    }
+
+    //This is will turn person into a string that is still structured as an object
+    localStorage.setItem("person", JSON.stringify(person));
+
+    //This will turn the above back into a working object and save it into our new variable davidPerson
+    var davidPerson = JSON.parse(localStorage.getItem("person"));
+    
+    </script>
   </body>
 </html>
